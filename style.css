@@ -1,0 +1,6 @@
+.time-sets {
+    display: grid;
+    grid-template-columns: 60px 400px 60px;
+    justify-items: center;
+    align-items: center;
+}
