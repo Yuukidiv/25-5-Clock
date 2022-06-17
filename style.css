@@ -1,6 +1,16 @@
+.dual-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    width: 700px;
+    justify-items: center;
+    margin: auto;
+    align-items: center;
+}
+
+
 .time-sets {
     display: grid;
-    grid-template-columns: 60px 400px 60px;
+    grid-template-columns: 50px 200px 50px;
     justify-items: center;
     align-items: center;
 }

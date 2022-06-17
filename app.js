@@ -4,6 +4,7 @@ function App() {
 const [display, setDisplay] = React.useState(25 * 60);
 const [breakTime, setBreakTime] = React.useState(5 * 60);
 const [sessionTime, setSessionTime] = React.useState(25 * 60);
+const [timerOn, setTimerOn] = React.useState(false);
 // This is a javascript Function
 const formatTime = (time) => {
     let minutes = Math.floor(time/60); // this is 25
@@ -25,14 +26,26 @@ const formatTime = (time) => {
 
 const changeTime = (amount, type) => {
     if (type == "break") {
+        // to not let go beyond 0 and amount because when we push up we have a number > 0 so it runs the code
+        if (breakTime <= 60 && amount < 0 ) {
+            return;
+        }
         setBreakTime((prev) => prev + amount);
     } else {
-        setSessionTime((prev) => prev + amount)
+        if (sessionTime <= 60 && amount < 0) {
+            return;
+        }
+        setSessionTime((prev) => prev + amount);
+        if(!timerOn) {
+            setDisplay(sessionTime + amount);
+        }
     }
 };
 
     return (
-    <div>
+    <div className="center-align">
+        <h1>Pomodoro Clock</h1>
+        <div className ="dual-container">
         <Length 
         title={"break length"}
         changeTime={changeTime}
@@ -40,7 +53,6 @@ const changeTime = (amount, type) => {
         time={breakTime}
         formatTime={formatTime}
         />
-
         <Length 
         title={"session length"}
         changeTime={changeTime}
@@ -48,7 +60,7 @@ const changeTime = (amount, type) => {
         time={sessionTime}
         formatTime={formatTime}
         />
-
+        </div>
         <h1>{formatTime(display)}</h1>  
     </div> );
 
