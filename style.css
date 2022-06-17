@@ -1,3 +1,5 @@
+/* Need to change the style because is not responsive and shit ugly */ 
+
 .dual-container {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -7,6 +9,14 @@
     align-items: center;
 }
 
+body {
+    background: rgb(136,255,158);
+    background: radial-gradient(circle, rgba(136,255,158,1) 0%, rgba(129,255,251,1) 100%);
+}
+
+#big {
+    background-color: white;
+}
 
 .time-sets {
     display: grid;

@@ -43,7 +43,7 @@ const changeTime = (amount, type) => {
 };
 
     return (
-    <div className="center-align">
+    <div className="center-align" id ="big">
         <h1>Pomodoro Clock</h1>
         <div className ="dual-container">
         <Length 
@@ -62,6 +62,13 @@ const changeTime = (amount, type) => {
         />
         </div>
         <h1>{formatTime(display)}</h1>  
+        <button className="btn-large deep-purple lighten-2">
+            {timerOn ? (
+                <i className="material-icons">pause_circle_filled</i>
+            ) : (
+                <i className="material-icons">play_circle_filled</i>
+            )}
+        </button>
     </div> );
 
 }
