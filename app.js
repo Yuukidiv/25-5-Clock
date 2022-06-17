@@ -3,6 +3,7 @@ function App() {
 // This is a variable in React
 const [display, setDisplay] = React.useState(25 * 60);
 const [breakTime, setBreakTime] = React.useState(5 * 60);
+const [sessionTime, setSessionTime] = React.useState(25 * 60);
 // This is a javascript Function
 const formatTime = (time) => {
     let minutes = Math.floor(time/60); // this is 25
@@ -22,12 +23,19 @@ const formatTime = (time) => {
     //  (seconds < 10 ? "0" + seconds : seconds);
 } 
 
+const changeTime = (amount, type) => {
+    if (type == "break") {
+        setBreakTime((prev) => prev + amount);
+    } else {
+        setSessionTime((prev) => prev + amount)
+    }
+};
 
     return (
     <div>
         <Length 
         title={"break length"}
-        changeTime={null}
+        changeTime={changeTime}
         type={"break"}
         time={breakTime}
         formatTime={formatTime}
@@ -35,9 +43,9 @@ const formatTime = (time) => {
 
         <Length 
         title={"session length"}
-        changeTime={null}
+        changeTime={changeTime}
         type={"session"}
-        time={null}
+        time={sessionTime}
         formatTime={formatTime}
         />
 
@@ -52,11 +60,13 @@ function Length({title, changeTime, type, time, formatTime}) {
         <div>
             <h3 id ="break-label">{title}</h3>
             <div className = "time-sets">
-                <button className ="btn-small deep-purple lighten-2">
+                <button className ="btn-small deep-purple lighten-2"
+                 onClick={() => changeTime(-60, type)}>
                     <i className="material-icons">arrow_downward</i>
                 </button>
                 <h3>{formatTime(time)}</h3>
-                <button className ="btn-small deep-purple lighten-2">
+                <button className ="btn-small deep-purple lighten-2"
+                 onClick={() => changeTime(60, type)}>
                     <i className="material-icons">arrow_upward</i>
                 </button>
             </div>
