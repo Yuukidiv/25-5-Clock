@@ -6,7 +6,7 @@ const [breakTime, setBreakTime] = React.useState(5 * 60);
 const [sessionTime, setSessionTime] = React.useState(25 * 60);
 const [timerOn, setTimerOn] = React.useState(false);
 const [onBreak, setOnBreak] = React.useState(false);
-const [breakAudio, setBreakAudio] = React.useStae(
+const [breakAudio, setBreakAudio] = React.useState(
     new Audio("./Sound.mp3")
 );
 const playBreakSound = () => {
@@ -60,6 +60,17 @@ const controlTime = () => {
             date = new Date().getTime();
             if (date > nextDate) {
                 setDisplay(prev => {
+                    if(prev <= 0 && !onBreakVariable) {
+                        playBreakSound();
+                        onBreakVariable=true;
+                        setOnBreak(true)
+                        return breakTime;
+                    } else if (prev <= 0 && onBreakVariable) {
+                        playBreakSound();
+                        onBreakVariable=false;
+                        setOnBreak(false)
+                        return sessionTime;
+                    }
                     return prev -1;
                 });
                 nextDate += second;
@@ -100,6 +111,7 @@ const resetTime = () => {
         formatTime={formatTime}
         />
         </div>
+        <h3>{onBreak ? "Break" : "Session"}</h3>
         <h1>{formatTime(display)}</h1>  
         <button className="btn-large deep-purple lighten-2" onClick={controlTime}>
             {timerOn ? (
@@ -121,12 +133,12 @@ function Length({title, changeTime, type, time, formatTime}) {
         <div>
             <h3 id ="break-label">{title}</h3>
             <div className = "time-sets">
-                <button className ="btn-small deep-purple lighten-2"
+                <button id ="break-decrement" className ="btn-small deep-purple lighten-2"
                  onClick={() => changeTime(-60, type)}>
                     <i className="material-icons">arrow_downward</i>
                 </button>
                 <h3>{formatTime(time)}</h3>
-                <button className ="btn-small deep-purple lighten-2"
+                <button id="session-increment" className ="btn-small deep-purple lighten-2"
                  onClick={() => changeTime(60, type)}>
                     <i className="material-icons">arrow_upward</i>
                 </button>
