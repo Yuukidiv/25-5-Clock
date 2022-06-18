@@ -5,6 +5,14 @@ const [display, setDisplay] = React.useState(25 * 60);
 const [breakTime, setBreakTime] = React.useState(5 * 60);
 const [sessionTime, setSessionTime] = React.useState(25 * 60);
 const [timerOn, setTimerOn] = React.useState(false);
+const [onBreak, setOnBreak] = React.useState(false);
+const [breakAudio, setBreakAudio] = React.useStae(
+    new Audio("./Sound.mp3")
+);
+const playBreakSound = () => {
+    breakAudio.currentTime = 0;
+    breakAudio.play();
+}
 // This is a javascript Function
 const formatTime = (time) => {
     let minutes = Math.floor(time/60); // this is 25
@@ -42,6 +50,37 @@ const changeTime = (amount, type) => {
     }
 };
 
+const controlTime = () => {
+    let second = 1000;
+    let date = new Date().getTime();
+    let nextDate = new Date().getTime() + second;
+    let onBreakVariable = onBreak;
+    if(!timerOn) {
+        let interval = setInterval(() => {
+            date = new Date().getTime();
+            if (date > nextDate) {
+                setDisplay(prev => {
+                    return prev -1;
+                });
+                nextDate += second;
+            }
+        }, 30);
+        localStorage.clear();
+        localStorage.setItem('interval-id', interval);
+    }
+    if(timerOn) {
+        clearInterval(localStorage.getItem('interval-id'));
+    }
+
+    setTimerOn(!timerOn);
+}
+
+const resetTime = () => {
+    setDisplay(25 * 60);
+    setBreakTime(5 * 60);
+    setSessionTime(25 * 60);
+} 
+
     return (
     <div className="center-align" id ="big">
         <h1>Pomodoro Clock</h1>
@@ -62,12 +101,15 @@ const changeTime = (amount, type) => {
         />
         </div>
         <h1>{formatTime(display)}</h1>  
-        <button className="btn-large deep-purple lighten-2">
+        <button className="btn-large deep-purple lighten-2" onClick={controlTime}>
             {timerOn ? (
                 <i className="material-icons">pause_circle_filled</i>
             ) : (
                 <i className="material-icons">play_circle_filled</i>
             )}
+        </button>
+        <button className="btn-large deep-purple lighten-2" onClick={resetTime}>
+            <i className="material-icons">replay</i>
         </button>
     </div> );
 
