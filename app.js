@@ -113,14 +113,14 @@ const resetTime = () => {
         </div>
         <h3>{onBreak ? "Break" : "Session"}</h3>
         <h1>{formatTime(display)}</h1>  
-        <button className="btn-large deep-purple lighten-2" onClick={controlTime}>
+        <button className="btn-large" onClick={controlTime}>
             {timerOn ? (
                 <i className="material-icons">pause_circle_filled</i>
             ) : (
                 <i className="material-icons">play_circle_filled</i>
             )}
         </button>
-        <button className="btn-large deep-purple lighten-2" onClick={resetTime}>
+        <button className="btn-large" onClick={resetTime}>
             <i className="material-icons">replay</i>
         </button>
     </div> );
@@ -130,15 +130,15 @@ const resetTime = () => {
 // This is a component, which means is a package to push into the code
 function Length({title, changeTime, type, time, formatTime}) {
     return (
-        <div>
+        <div id="buttons">
             <h3 id ="break-label">{title}</h3>
             <div className = "time-sets">
-                <button id ="break-decrement" className ="btn-small deep-purple lighten-2"
+                <button id ="break-decrement" className ="btn-small"
                  onClick={() => changeTime(-60, type)}>
                     <i className="material-icons">arrow_downward</i>
                 </button>
                 <h3>{formatTime(time)}</h3>
-                <button id="session-increment" className ="btn-small deep-purple lighten-2"
+                <button id="session-increment" className ="btn-small"
                  onClick={() => changeTime(60, type)}>
                     <i className="material-icons">arrow_upward</i>
                 </button>
